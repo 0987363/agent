@@ -1,0 +1,41 @@
+package handlers
+
+import (
+	dcate "github.com/0987363/agent/handlers/douyu/category"
+	droom "github.com/0987363/agent/handlers/douyu/room"
+	"github.com/0987363/agent/middleware"
+
+	"github.com/gin-gonic/gin"
+)
+
+var RootMux = func() *gin.Engine {
+	//	gin.SetMode(gin.ReleaseMode)
+	return gin.New()
+}()
+
+func init() {
+	RootMux.Use(middleware.Logger())
+	RootMux.Use(middleware.Recoverer())
+	RootMux.Use(middleware.Bolt())
+
+	v1Mux := RootMux.Group("/v1")
+	{
+		douyuMux := v1Mux.Group("/douyu")
+		{
+			categoryMux := douyuMux.Group("/category")
+			{
+				categoryMux.GET("/", dcate.List)
+				categoryMux.GET("/short/:short_name/sub", dcate.ListSub)
+			}
+
+			roomMux := douyuMux.Group("/room")
+			{
+				roomMux.GET("/", droom.List)
+				roomMux.GET("/category/:id", droom.ListCategory)
+				roomMux.GET("/tag/:id", droom.ListSub)
+
+				roomMux.GET("/id/:id", droom.Get)
+			}
+		}
+	}
+}
