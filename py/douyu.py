@@ -109,7 +109,8 @@ class DouYu:
         elif error == 102:
             raise Exception('房间不存在')
         elif error == 104:
-            raise Exception('房间未开播')
+            #raise Exception('房间未开播')
+            return ""
         else:
             key = self.get_js()
         return "http://tx2play1.douyucdn.cn/live/{}.flv?uuid=".format(key)

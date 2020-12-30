@@ -1,9 +1,13 @@
 package handlers
 
 import (
+	"time"
+
 	dcate "github.com/0987363/agent/handlers/douyu/category"
 	droom "github.com/0987363/agent/handlers/douyu/room"
 	"github.com/0987363/agent/middleware"
+
+	"github.com/0987363/cache"
 
 	"github.com/gin-gonic/gin"
 )
@@ -16,7 +20,7 @@ var RootMux = func() *gin.Engine {
 func init() {
 	RootMux.Use(middleware.Logger())
 	RootMux.Use(middleware.Recoverer())
-	RootMux.Use(middleware.Bolt())
+	RootMux.Use(cache.SiteCache(nil, time.Minute*10))
 
 	v1Mux := RootMux.Group("/v1")
 	{
