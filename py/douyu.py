@@ -3,6 +3,7 @@
 import hashlib
 import re
 import time
+import sys
 
 import execjs
 import requests
@@ -130,6 +131,5 @@ class DouYu:
 
 
 if __name__ == '__main__':
-    r = input('输入斗鱼直播间号：\n')
-    s = DouYu(r)
+    s = DouYu(sys.argv[1])
     print(s.get_real_url())
