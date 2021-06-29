@@ -1,17 +1,31 @@
-# 获取斗鱼直播间的真实流媒体地址，默认最高画质。
+# 获取斗鱼直播间的真实流媒体地址，默认最高画质
+# 使用 https://github.com/wbt5/real-url/issues/185 中两位大佬@wjxgzz @4bbu6j5885o3gpv6ss8找到的的CDN，在此感谢！
 import hashlib
 import re
 import time
-import sys
 
 import execjs
 import requests
 
 
 class DouYu:
+    """
+    可用来替换返回链接中的主机部分
+    两个阿里的CDN：
+    dyscdnali1.douyucdn.cn
+    dyscdnali3.douyucdn.cn
+    墙外不用带尾巴的akm cdn：
+    hls3-akm.douyucdn.cn
+    hlsa-akm.douyucdn.cn
+    hls1a-akm.douyucdn.cn
+    """
 
     def __init__(self, rid):
-        # 房间号通常为1~7位纯数字，浏览器地址栏中看到的房间号不一定是真实rid.
+        """
+        房间号通常为1~7位纯数字，浏览器地址栏中看到的房间号不一定是真实rid.
+        Args:
+            rid:
+        """
         self.did = '10000000000000000000000000001501'
         self.t10 = str(int(time.time()))
         self.t13 = str(int((time.time() * 1000)))
@@ -109,13 +123,13 @@ class DouYu:
         elif error == 102:
             raise Exception('房间不存在')
         elif error == 104:
-            #raise Exception('房间未开播')
-            return ""
+            raise Exception('房间未开播')
         else:
             key = self.get_js()
-        return "http://tx2play1.douyucdn.cn/live/{}.flv?uuid=".format(key)
+        return "http://dyscdnali1.douyucdn.cn/live/{}.flv?uuid=".format(key)
 
 
 if __name__ == '__main__':
-    s = DouYu(sys.argv[1])
+    r = input('输入斗鱼直播间号：\n')
+    s = DouYu(r)
     print(s.get_real_url())
