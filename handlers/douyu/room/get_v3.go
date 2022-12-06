@@ -40,7 +40,7 @@ func GetV3(c *gin.Context) {
 
 	out, err := cmd.CombinedOutput()
 	if err != nil {
-		logger.Errorf("Load media source from node failed: %v, response: %v", err, out)
+		logger.Errorf("Load media source from node failed: %v, response: %v", err, string(out))
 		c.AbortWithStatus(http.StatusBadRequest)
 		return
 	}
