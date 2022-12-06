@@ -53,4 +53,16 @@ func init() {
 			}
 		}
 	}
+
+	v3Mux := RootMux.Group("/v3")
+	{
+		douyuMux := v3Mux.Group("/douyu")
+		{
+			roomMux := douyuMux.Group("/room")
+			{
+				roomMux.GET("/id/:id", droom.GetV3)
+			}
+		}
+	}
+
 }

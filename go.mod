@@ -3,7 +3,7 @@ module github.com/0987363/agent
 go 1.14
 
 require (
-	github.com/0987363/cache v1.1.7
+	github.com/0987363/cache v1.1.8-0.20221206154741-93fa9e273e01
 	github.com/boltdb/bolt v1.3.1
 	github.com/bradfitz/gomemcache v0.0.0-20190913173617-a41fca850d0b // indirect
 	github.com/bshuster-repo/logrus-logstash-hook v1.0.0
