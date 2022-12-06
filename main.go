@@ -5,5 +5,5 @@ import (
 )
 
 func main() {
-	handlers.RootMux.Run(":80")
+	handlers.RootMux.Run(":8080")
 }

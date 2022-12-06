@@ -42,4 +42,15 @@ func init() {
 			}
 		}
 	}
+
+	v2Mux := RootMux.Group("/v2")
+	{
+		douyuMux := v2Mux.Group("/douyu")
+		{
+			roomMux := douyuMux.Group("/room")
+			{
+				roomMux.GET("/id/:id", droom.GetV2)
+			}
+		}
+	}
 }
