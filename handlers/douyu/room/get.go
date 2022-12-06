@@ -2,6 +2,7 @@ package room
 
 import (
 	"net/http"
+	"os"
 	"os/exec"
 	"strings"
 
@@ -20,7 +21,19 @@ func Get(c *gin.Context) {
 		return
 	}
 
-	cmd := exec.Command("python3", "py/douyu.py", roomID)
+	var cmd *exec.Cmd
+	if _, err := os.Stat("douyu.py"); err == nil {
+		cmd = exec.Command("python3", "douyu.py", roomID)
+	} else if _, err := os.Stat("py/douyu.py"); err == nil {
+		cmd = exec.Command("python3", "py/douyu.py", roomID)
+	} else if _, err := os.Stat("/douyu.py"); err == nil {
+		cmd = exec.Command("python3", "/douyu.py", roomID)
+	} else {
+		logger.Error("Could not found python file.")
+		c.AbortWithStatus(http.StatusBadRequest)
+		return
+	}
+
 	out, err := cmd.CombinedOutput()
 	if err != nil {
 		logger.Errorf("Load media source from node failed: %v, response: %v", err, string(out))

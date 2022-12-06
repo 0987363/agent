@@ -25,6 +25,8 @@ func GetV2(c *gin.Context) {
 		cmd = exec.Command("python3", "douyu.py", roomID)
 	} else if _, err := os.Stat("py/douyu.py"); err == nil {
 		cmd = exec.Command("python3", "py/douyu.py", roomID)
+	} else if _, err := os.Stat("/douyu.py"); err == nil {
+		cmd = exec.Command("python3", "/douyu.py", roomID)
 	} else {
 		logger.Error("Could not found python file.")
 		c.AbortWithStatus(http.StatusBadRequest)
